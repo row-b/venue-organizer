@@ -9,6 +9,9 @@ class String
      */
     private $string;
 
+    /**
+     * @param $string
+     */
     public function __construct($string)
     {
         $this->string = $string;
@@ -17,7 +20,7 @@ class String
     /**
      * @return string
      */
-    public function getString()
+    public function __ToString()
     {
         return $this->string;
     }
