@@ -3,7 +3,6 @@ namespace CoreDomain\tests\ValueObject\DateTime;
 
 
 use CoreDomain\ValueObject\DateTime\Time;
-use CoreDomain\Exception\InvalidArgumentValidationException;
 
 class TimeTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,7 +18,7 @@ class TimeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string $invalidTime
-     * @expectedException InvalidArgumentValidationException
+     * @expectedException \CoreDomain\Exception\InvalidArgumentValidationException
      * @dataProvider invalidTimeProvider
      */
     public function testInvalidFormatThrowsException($invalidTime)
