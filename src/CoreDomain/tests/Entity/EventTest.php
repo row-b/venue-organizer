@@ -7,7 +7,6 @@ use CoreDomain\ValueObject\DateTime\DateWithTimeRange;
 use CoreDomain\ValueObject\Id\UUId;
 use CoreDomain\ValueObject\Text\String;
 
-
 class EventTest extends \PHPUnit_Framework_TestCase
 {
     /**
