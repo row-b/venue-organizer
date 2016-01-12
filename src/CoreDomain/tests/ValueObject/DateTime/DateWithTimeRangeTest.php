@@ -45,13 +45,13 @@ class DateWithTimeRangeTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [null, null],
-            [new Time("07:00"), null],
-            [null, new Time("20:00")],
-            [new Time("04:00", "04:00")],
-            [new Time("20:00", "20:00")],
-            [new Time("00:00", "05:59")],
-            [new Time("06:00", "23:59")],
-            [new Time("06:00", "05:59")]
+            [Time::fromString("07:00"), null],
+            [null, Time::fromString("20:00")],
+            [Time::fromString("04:00"), Time::fromString("04:00")],
+            [Time::fromString("20:00"), Time::fromString("20:00")],
+            [Time::fromString("00:00"), Time::fromString("05:59")],
+            [Time::fromString("06:00"), Time::fromString("23:59")],
+            [Time::fromString("06:00"), Time::fromString("05:59")]
         ];
     }
 
@@ -61,9 +61,9 @@ class DateWithTimeRangeTest extends \PHPUnit_Framework_TestCase
     public function invalidTimeRangeProvider()
     {
         return [
-            [new Time("20:00"), new Time("18:00")],
-            [new Time("04:00"), new Time("01:00")],
-            [new Time("05:59"), new Time("06:00")]
+            [Time::fromString("20:00"), Time::fromString("18:00")],
+            [Time::fromString("04:00"), Time::fromString("01:00")],
+            [Time::fromString("05:59"), Time::fromString("06:00")]
         ];
     }
 }

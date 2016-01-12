@@ -1,6 +1,7 @@
 <?php
 namespace CoreDomain\ValueObject\DateTime;
 
+use CoreDomain\Assert\Assertion;
 use CoreDomain\Exception\InvalidArgumentValidationException;
 
 /**
@@ -39,7 +40,7 @@ class DateWithTimeRange
      */
     public function __construct(\DateTimeImmutable $date, Time $timeStart = null, Time $timeEnd = null)
     {
-        $this->assertValidTimeRange($timeStart, $timeEnd);
+        Assertion::timeRange(Time::fromString(self::START_TIME_DAY), $timeStart, $timeEnd);
         $this->date = $date;
         $this->timeStart = $timeStart;
         $this->timeEnd = $timeEnd;
@@ -69,34 +70,4 @@ class DateWithTimeRange
         return $this->timeEnd;
     }
 
-    /**
-     * @param Time|null $timeStart
-     * @param Time|null $timeEnd
-     * @throws InvalidArgumentValidationException
-     */
-    private function assertValidTimeRange(Time $timeStart = null, Time $timeEnd = null)
-    {
-        if ($timeStart && $timeEnd) {
-            // both times are after self::START_TIME_DAY
-            if ($timeStart->getTime() >= self::START_TIME_DAY && $timeEnd->getTime() >= self::START_TIME_DAY) {
-                if ($timeStart->getTime() > $timeEnd->getTime()) {
-                    throw new InvalidArgumentValidationException();
-                }
-                return;
-            }
-
-            // both times are after self::START_TIME_DAY
-            if ($timeStart->getTime() < self::START_TIME_DAY && $timeEnd->getTime() < self::START_TIME_DAY) {
-                if ($timeStart->getTime() > $timeEnd->getTime()) {
-                    throw new InvalidArgumentValidationException();
-                }
-                return;
-            }
-
-            // one of the times is before self::START_TIME_DAY, the other one is after
-            if ($timeStart->getTime() < $timeEnd->getTime()) {
-                throw new InvalidArgumentValidationException();
-            }
-        }
-    }
 }
