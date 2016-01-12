@@ -8,25 +8,48 @@ class TimeTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param string $validTime
-     * @dataProvider validTimeProvider
+     * @dataProvider validTimeStringProvider
      */
-    public function testValidTime($validTime)
+    public function testValidTimeFromString($validTime)
     {
-        $time = new Time($validTime);
-        $this->assertEquals($validTime, $time->getTime());
+        $time = Time::fromString($validTime);
+        $this->assertEquals($validTime, $time);
     }
 
     /**
-     * @param string $invalidTime
-     * @expectedException \CoreDomain\Exception\InvalidArgumentValidationException
-     * @dataProvider invalidTimeProvider
+     * @param int $hours
+     * @param int $minutes
+     * @dataProvider validTimeValuesProvider
      */
-    public function testInvalidFormatThrowsException($invalidTime)
+    public function testValidTimeFromValues($hours, $minutes)
     {
-        new Time($invalidTime);
+        $time = Time::fromValues($hours, $minutes);
+        $expectedTime = sprintf('%02d%s%02d', $hours, Time::DELIMITER, $minutes);
+        $this->assertEquals($expectedTime, $time);
     }
 
-    public function validTimeProvider()
+   /**
+    * @param string $invalidTime
+    * @expectedException \CoreDomain\Exception\InvalidArgumentValidationException
+    * @dataProvider invalidTimeStringProvider
+    */
+    public function testInvalidTimeFromString($invalidTime)
+    {
+        Time::fromString($invalidTime);
+    }
+
+    /**
+     * @param int $hours
+     * @param int $minutes
+     * @expectedException \CoreDomain\Exception\InvalidArgumentValidationException
+     * @dataProvider invalidTimeValuesProvider
+     */
+    public function testInvalidTimeFromValues($hours, $minutes)
+    {
+        Time::fromValues($hours, $minutes);
+    }
+
+    public function validTimeStringProvider()
     {
         return [
             ["00:00"],
@@ -34,10 +57,18 @@ class TimeTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    public function validTimeValuesProvider()
+    {
+        return [
+            [0, 0],
+            [23, 59]
+        ];
+    }
+
     /**
      * @return array
      */
-    public function invalidTimeProvider()
+    public function invalidTimeStringProvider()
     {
         return [
             ["xx:xx"],
@@ -46,6 +77,20 @@ class TimeTest extends \PHPUnit_Framework_TestCase
             ["01:61"],
             ["24:01"],
             ["12.16"]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function invalidTimeValuesProvider()
+    {
+        return [
+            ['x','y'],
+            ['x',1],
+            [1,'y'],
+            [1,60],
+            [24,1]
         ];
     }
 }

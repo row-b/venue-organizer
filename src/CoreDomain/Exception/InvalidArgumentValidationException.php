@@ -2,7 +2,9 @@
 namespace CoreDomain\Exception;
 
 
-class InvalidArgumentValidationException extends ValidationException
+use Assert\InvalidArgumentException;
+
+class InvalidArgumentValidationException extends InvalidArgumentException
 {
 
 }

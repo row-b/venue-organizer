@@ -71,7 +71,7 @@ class DateWithTimeRange
 
     /**
      * @param Time|null $timeStart
-     * @param null $timeEnd
+     * @param Time|null $timeEnd
      * @throws InvalidArgumentValidationException
      */
     private function assertValidTimeRange(Time $timeStart = null, Time $timeEnd = null)
@@ -92,7 +92,7 @@ class DateWithTimeRange
                 }
                 return;
             }
-//var_dump($timeStart, $timeEnd);
+
             // one of the times is before self::START_TIME_DAY, the other one is after
             if ($timeStart->getTime() < $timeEnd->getTime()) {
                 throw new InvalidArgumentValidationException();
