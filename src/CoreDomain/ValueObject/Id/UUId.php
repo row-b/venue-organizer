@@ -1,6 +1,7 @@
 <?php
 namespace CoreDomain\ValueObject\Id;
 
+use Ramsey\Uuid\Uuid as RamseyUUid;
 
 class UUId
 {
@@ -9,8 +10,11 @@ class UUId
      */
     private $id;
 
-    public function __construct($id)
+    public function __construct($id = null)
     {
+        if (!$id) {
+            $id = RamseyUUid::uuid4()->toString();
+        }
         $this->id = $id;
     }
 
