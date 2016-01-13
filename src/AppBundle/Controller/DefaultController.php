@@ -21,6 +21,10 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $dbEventRepository = new DbEventRepository($em);
+
+        /*
         $date = new \DateTimeImmutable("2010-12-23");
         $timeStart = Time::fromString("20:00");
         $timeEnd = Time::fromString("03:00");
@@ -34,5 +38,11 @@ class DefaultController extends Controller
         $dbEventRepository->add($event);
 
         echo "success"; die;
+        */
+        $UUId = new UUId('a276885b-8cd8-4d6a-8bd3-078965ac2078');
+        $event = $dbEventRepository->find($UUId);
+
+        var_dump($event);
+        die;
     }
 }
